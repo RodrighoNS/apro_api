@@ -19,7 +19,6 @@ RSpec.describe "Developers API", type: :request do
 
   # Test suite for POST /Developers
   describe 'POST /developers' do
-    # valid payload
     let(:valid_attributes) { { name: 'Josefina', role: 'frontend dev' } }
 
     context 'when the request is valid' do
