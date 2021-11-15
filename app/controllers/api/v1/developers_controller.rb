@@ -3,10 +3,17 @@
 module Api
   module V1
     class DevelopersController < ApplicationController
+      before_action :set_developer, only: [:show, :update, :destroy]
+
       # GET /developers
       def index
         @developers = Developer.all
         json_response(@developers)
+      end
+
+      # GET /developers/:id
+      def show
+        json_response(@developer)
       end
 
       # POST /developers
@@ -21,6 +28,10 @@ module Api
 
       def developer_params
         params.permit(:name, :role)
+      end
+
+      def set_developer
+        @developer = Developer.find(params[:id])
       end
     end
   end

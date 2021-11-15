@@ -4,9 +4,10 @@ require 'rails_helper'
 
 RSpec.describe 'Developers API', type: :request do
   let!(:developers) { create_list(:developer, 10) }
+  let(:developer_id) { developers.first.id }
 
   # Test suite for GET /api/v1/Developers
-  describe 'GET /developers' do
+  describe 'GET /api/v1/developers' do
     before { get '/api/v1/developers' }
 
     it 'returns developers' do
@@ -16,6 +17,34 @@ RSpec.describe 'Developers API', type: :request do
 
     it 'returns status code 200' do
       expect(response).to have_http_status(200)
+    end
+  end
+
+  # Test suite for GET /api/v1/developers/:id
+  describe 'GET /api/v1/developers/:developer_id' do
+    before { get "/api/v1/developers/#{developer_id}" }
+
+    context 'when the record exists' do
+      it 'returns the developer' do
+        expect(json).not_to be_empty
+        expect(json['id']).to eq(developer_id)
+      end
+
+      it 'returns status code 200' do
+        expect(response).to have_http_status(200)
+      end
+    end
+
+    context 'when the record does not exist' do
+      let(:developer_id) { 101 }
+
+      it 'returns a not found message' do
+        expect(response.body).to match(/Couldn't find Developer/)
+      end
+
+      it 'returns status code 404' do
+        expect(response).to have_http_status(404)
+      end
     end
   end
 
