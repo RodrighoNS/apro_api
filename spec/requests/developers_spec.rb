@@ -5,8 +5,9 @@ require 'rails_helper'
 RSpec.describe 'Developers API', type: :request do
   let!(:developers) { create_list(:developer, 10) }
   let(:developer_id) { developers.first.id }
+  let(:valid_attributes) { { name: 'Josefina', role: 'frontend dev' } }
 
-  # Test suite for GET /api/v1/Developers
+  # Test suite for GET /api/v1/developers
   describe 'GET /api/v1/developers' do
     before { get '/api/v1/developers' }
 
@@ -48,10 +49,8 @@ RSpec.describe 'Developers API', type: :request do
     end
   end
 
-  # Test suite for POST /api/v1/Developers
+  # Test suite for POST /api/v1/developers
   describe 'POST /api/v1/developers' do
-    let(:valid_attributes) { { name: 'Josefina', role: 'frontend dev' } }
-
     context 'when the request is valid' do
       before { post '/api/v1/developers', params: valid_attributes }
 
@@ -75,6 +74,31 @@ RSpec.describe 'Developers API', type: :request do
         expect(response.body)
           .to match(/Validation failed: Role can't be blank/)
       end
+    end
+  end
+
+  # Test suite for PUT /todos/:id
+  describe 'PUT /api/v1/developers/:id' do
+
+    context 'when the record exists' do
+      before { put "/api/v1/developers/#{developer_id}", params: valid_attributes }
+
+      it 'updates the record' do
+        expect(response.body).not_to be_empty
+      end
+
+      it 'returns status code 200' do
+        expect(response).to have_http_status(200)
+      end
+    end
+  end
+
+  # Test suite for DELETE /api/v1/developers/:id
+  describe 'DELETE /api/v1/developers/:id' do
+    before { delete "/api/v1/developers/#{developer_id}" }
+
+    it 'returns status code 204' do
+      expect(response).to have_http_status(204)
     end
   end
 end

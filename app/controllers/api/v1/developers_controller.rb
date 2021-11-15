@@ -24,6 +24,19 @@ module Api
         json_response(@developer, :created)
       end
 
+      # PUT /developers/:id
+      def update
+        @developer.update(developer_params)
+        json_response(@developer)
+      end
+
+      # DELETE /developers/:id
+      def destroy
+        @developer.destroy
+        #head :no_content
+        json_response(@developer, :no_content)
+      end
+
       private
 
       def developer_params
