@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
-RSpec.describe "Developers API", type: :request do
+RSpec.describe 'Developers API', type: :request do
   let!(:developers) { create_list(:developer, 10) }
 
   # Test suite for GET /api/v1/Developers
-  describe "GET /developers" do
+  describe 'GET /developers' do
     before { get '/api/v1/developers' }
 
     it 'returns developers' do
