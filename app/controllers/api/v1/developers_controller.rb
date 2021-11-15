@@ -33,8 +33,7 @@ module Api
       # DELETE /developers/:id
       def destroy
         @developer.destroy
-        #head :no_content
-        json_response(@developer, :no_content)
+        head :no_content
       end
 
       private
