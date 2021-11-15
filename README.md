@@ -14,6 +14,11 @@ git clone git@github.com:RodrighoNS/apro_api.git
 bundle install
 ```
 
+- Run migrations:
+```bash
+rails db:migrate
+```
+
 - Fire up the server:
 ```bash
 rails s
